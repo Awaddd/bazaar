@@ -1,4 +1,7 @@
+import getProduct from "@/app/actions/getProduct"
+import getProducts from "@/app/actions/getProducts"
 import BackButton from "@/components/BackButton"
+import MoreProducts from "@/components/MoreProducts"
 import ProductGallery from "@/components/ProductGallery"
 import Rating from "@/components/Rating"
 import Sizes from "@/components/Sizes"
@@ -10,13 +13,26 @@ type Props = {
     params: { id: string }
 }
 
-export default function ({ params }: Props) {
+export default async function ({ params }: Props) {
+    const product = await getProduct(params.id)
+
+    const moreProducts = await getProducts({
+        exclude: [parseInt(params.id)],
+        max: 2
+    })
+
+    if (!product) {
+        return (
+            <h3>No product</h3>
+        )
+    }
+
     return (
         <main className="h-full relative flex flex-col space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-12">
             <div className="grid gap-2 lg:flex lg:flex-col md:gap-4">
-                <ProductGallery product={products[0]} />
+                <ProductGallery product={product} />
 
-                {/* <MoreProducts className="hidden mt-4 xl:mt-8 md:block" /> */}
+                <MoreProducts products={moreProducts} className="hidden mt-4 xl:mt-8 md:block" />
             </div>
 
             <div className="flex flex-col space-y-3 lg:pt-2 xl:max-w-2/3">
@@ -28,7 +44,7 @@ export default function ({ params }: Props) {
                     <h2 className="text-5xl xl:text-6xl font-black">£199.00</h2>
                 </div>
 
-                <Sizes product={products[0]} />
+                <Sizes product={product} />
 
                 <div className="grid grid-cols-2 gap-2 mt-7">
                     <Button variant="secondary" size="lg">Add to cart</Button>
@@ -82,7 +98,7 @@ export default function ({ params }: Props) {
                         </p>
                     </div>
 
-                    {/* <MoreProducts className="md:hidden" /> */}
+                    <MoreProducts products={moreProducts} className="md:hidden" />
                 </section>
             </div>
 

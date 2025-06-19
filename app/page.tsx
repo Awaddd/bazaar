@@ -1,7 +1,7 @@
 import HomeProductGrid from "@/components/HomeProductGrid";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import getProducts from "./actions/getProduct";
+import getProducts from "./actions/getProducts";
 
 export default async function Home() {
     const products = await getProducts({ max: 6 })

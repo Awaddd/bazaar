@@ -1,10 +1,16 @@
-// WIP
+"use client"
 
 import { motion, useAnimate, useInView } from "motion/react";
-import Product from "./Product";
+import ProductGridItem from "./Product";
 import { useEffect } from "react";
+import { Product } from "@/types/product";
 
-export default function ({ className }: { className?: string }) {
+type Props = {
+    products: Product[]
+    className?: string
+}
+
+export default function ({ products, className }: Props) {
     const [scope, animate] = useAnimate()
     const isInView = useInView(scope, { once: true })
 
@@ -35,8 +41,8 @@ export default function ({ className }: { className?: string }) {
                 You May Also Like
             </motion.h4>
             <div ref={scope} className="grid grid-cols-2 gap-2 md:gap-4 mt-4">
-                {moreProducts.map(product => (
-                    <Product key={product.id} product={product} className="opacity-0" />
+                {products.map(product => (
+                    <ProductGridItem key={product.id} product={product} className="opacity-0" />
                 ))}
             </div>
         </div>
