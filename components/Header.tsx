@@ -1,18 +1,10 @@
-import { Theme } from '@/types/types'
-import { LucideMenu, Moon, ShoppingCart, Sun } from 'lucide-react'
+import { LucideMenu, ShoppingCart } from 'lucide-react'
 import Cart from './Cart'
 import NaivgationItems from './NaivgationItems'
+import ThemeToggle from './ThemeToggle'
 import { Button } from './ui/button'
 
-type Props = {
-    theme: Theme
-}
-
-export default function Header({ theme }: Props) {
-    function updateTheme(theme: Theme) {
-
-    }
-
+export default function Header() {
     return (
         <header className="h-[80px] lg:h-[90px] flex justify-between items-center">
             <div className="text-4xl font-black">
@@ -34,25 +26,7 @@ export default function Header({ theme }: Props) {
                         <ShoppingCart />
                     </Button>
                 </Cart>
-                {/* {theme === "dark" ? (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-lg font-medium ml-2"
-                        onClick={() => updateTheme("light")}
-                    >
-                        <Sun />
-                    </Button>
-                ) : (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-lg font-medium ml-2"
-                        onClick={() => updateTheme("dark")}
-                    >
-                        <Moon />
-                    </Button>
-                )} */}
+                <ThemeToggle />
             </nav>
         </header>
     )
