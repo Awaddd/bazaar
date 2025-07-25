@@ -6,8 +6,8 @@ export const ProductApiResponseSchema = z.object({
   price: z.number(),
   brand: z.string(),
   category: z.string(),
-  imageUrl: z.string().url(),
-  gallery: z.array(z.string().url()),
+  imageUrl: z.string(),
+  gallery: z.array(z.string()),
   sizes: z.array(
     z.object({
       size: z.number(),

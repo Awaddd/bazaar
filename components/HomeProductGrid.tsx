@@ -3,13 +3,13 @@
 import ProductGridItem from "./Product"
 import { stagger, useAnimate, useInView } from "motion/react"
 import { useEffect } from "react"
-import { Product } from "@/types/product"
+import { useQuery } from "@tanstack/react-query"
+import products from "@/features/products/products"
 
-type Props = {
-    products: Product[]
-}
+export default function () {
+    const { data } = useQuery(products.list())
+    console.log("client data", data)
 
-export default function ({ products }: Props) {
     const [scope, animate] = useAnimate()
     const inView = useInView(scope, { once: true })
 
@@ -25,7 +25,7 @@ export default function ({ products }: Props) {
 
     return (
         <main ref={scope} className="grid grid-cols-3 gap-4 p-4 rounded-xl">
-            {products.map(product => (
+            {data?.map(product => (
                 <ProductGridItem key={product.id} product={product} className="opacity-0" />
             ))}
         </main>

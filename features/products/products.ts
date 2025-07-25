@@ -4,18 +4,22 @@ import {
   ProductApiResponseSchema,
 } from "./schema";
 
+type Params = {
+  exclude?: number[];
+  max?: number;
+};
+
 const base = ["products"];
 
 export default {
-  list: () => ({
+  list: (options: Params = {}) => ({
     queryKey: [...base, "list"] as const,
-    queryFn: fetchProducts,
+    queryFn: () => fetchProducts(options),
   }),
 };
 
-async function fetchProducts() {
+async function fetchProducts(params: Params = {}) {
   const url = new URL("/api/products", process.env.NEXT_PUBLIC_API_ENDPOINT);
-  console.log("fetching at url", url);
 
   try {
     const response = await fetch(url);
@@ -29,7 +33,7 @@ async function fetchProducts() {
     return parseApiResponse(data);
   } catch (error) {
     console.error(error);
-    throw error;
+    return [];
   }
 }
 
@@ -42,6 +46,19 @@ function parseApiResponse(data: ProductApiResponse[]) {
       continue;
     }
 
-    validItems.push(item);
+    validItems.push({
+      ...item,
+      gallery: processGalleryUrls(item.gallery),
+      imageUrl: processImageUrl(item.imageUrl),
+    });
   }
+  return validItems;
+}
+
+function processGalleryUrls(arr: string[]) {
+  return arr.map((item) => processImageUrl(item));
+}
+
+function processImageUrl(url: string) {
+  return `${process.env.NEXT_PUBLIC_API_ENDPOINT}${url}`;
 }
