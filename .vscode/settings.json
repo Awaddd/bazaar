@@ -1,0 +1,18 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    "public": true,
+    "package-lock.json": true,
+    "package.json": true,
+    "tsconfig.json": true,
+    "next.config.ts": true,
+    "next-env.d.ts": true,
+    "components.json": true,
+    "postcss.config.mjs": true,
+    "README.md": false,
+    "app/favicon.ico": true,
+    "lib": false,
+    "drizzle.config.ts": true,
+    "drizzle": true
+  }
+}

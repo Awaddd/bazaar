@@ -49,17 +49,15 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: "Jordan 4",
+    name: "Jordan 1 Cool Gray",
     price: 149.0,
     category: "Sneakers",
     brand: "Jordan",
-    imageUrl:
-      "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-
+    imageUrl: "/assets/jordan-1-gray.webp",
     gallery: [
-      "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.pexels.com/photos/6540993/pexels-photo-6540993.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      "https://images.pexels.com/photos/13408853/pexels-photo-13408853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "/assets/jordan-1-gray.webp",
+      "/assets/jordan-1-gray-2.webp",
+      "/assets/jordan-1-gray-3.jpg",
     ],
     sizes: [
       {
