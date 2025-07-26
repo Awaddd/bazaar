@@ -19,7 +19,7 @@ export default function ({ id = "product", product, className }: Props) {
                 <MotionImage
                     src={product.imageUrl}
                     alt={`${product.name} ${product.category}`}
-                    className="w-full h-32 xl:h-48 object-cover rounded-t-lg"
+                    className="w-full h-48 xl:h-48 object-cover rounded-t-lg"
                 />
                 <div className="py-4 px-2">
                     <h5 className="mt-2 font-medium">{product.name}</h5>

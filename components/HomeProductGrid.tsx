@@ -23,7 +23,7 @@ export default function () {
     }, [inView, animate])
 
     return (
-        <main ref={scope} className="grid grid-cols-3 gap-4 p-4 rounded-xl">
+        <main ref={scope} className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4 rounded-xl">
             {data?.map(product => (
                 <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200" />
             ))}
