@@ -8,7 +8,6 @@ import products from "@/features/products/products"
 
 export default function () {
     const { data } = useQuery(products.list())
-    console.log("client data", data)
 
     const [scope, animate] = useAnimate()
     const inView = useInView(scope, { once: true })

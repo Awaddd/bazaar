@@ -34,7 +34,6 @@ async function fetchProducts(params: Params = {}) {
     }
 
     const data = (await response.json()) as ProductApiResponse[];
-    console.log("raw response", data);
     return parseApiResponse(data);
   } catch (error) {
     console.error(error);
@@ -56,8 +55,6 @@ async function fetchProductById(id: number): Promise<Product | null> {
     }
 
     const data = (await response.json()) as ProductApiResponse;
-    console.log("raw response", data);
-
     const result = ProductApiResponseSchema.safeParse(data);
 
     if (!result.success) {
