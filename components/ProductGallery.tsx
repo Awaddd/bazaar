@@ -19,7 +19,7 @@ export default function ({ productId }: Props) {
         <>
             <div className="overflow-hidden">
                 <MotionImage
-                    className="w-full h-64 sm:h-[65vh] max-h-128 object-cover"
+                    className="w-full h-64 sm:h-[65vh] max-h-128 object-cover bg-gray-200"
                     src={product.gallery[currentImage] || product.imageUrl}
                     alt={`${product.name} ${product.category}`}
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -35,7 +35,7 @@ export default function ({ productId }: Props) {
                 {product.gallery.map((image, index) => (
                     <MotionImage
                         key={index}
-                        className="w-full h-18 lg:h-24 sm:h-30 xl:h-36 object-cover"
+                        className="w-full h-18 lg:h-24 sm:h-30 xl:h-36 object-cover bg-gray-200"
                         src={image}
                         alt={`${product.name} gallery image ${index + 1}`}
                         active={index === currentImage}
