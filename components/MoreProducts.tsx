@@ -3,14 +3,18 @@
 import { motion, useAnimate, useInView } from "motion/react";
 import ProductGridItem from "./Product";
 import { useEffect } from "react";
-import { Product } from "@/types/product";
+import { useQuery } from "@tanstack/react-query";
+import products from "@/features/products/products";
 
 type Props = {
-    products: Product[]
+    productId: number
     className?: string
 }
 
-export default function ({ products, className }: Props) {
+export default function ({ productId, className }: Props) {
+    const { data } = useQuery(products.list({ limit: 2, exclude: productId }))
+    console.log("data", data)
+
     const [scope, animate] = useAnimate()
     const isInView = useInView(scope, { once: true })
 
@@ -23,6 +27,9 @@ export default function ({ products, className }: Props) {
             })
         }
     }, [isInView, animate])
+
+    // todo: do better handling on no result
+    if (!data) return
 
     return (
         <div className={className}>
@@ -41,7 +48,7 @@ export default function ({ products, className }: Props) {
                 You May Also Like
             </motion.h4>
             <div ref={scope} className="grid grid-cols-2 gap-2 md:gap-4 mt-4">
-                {products.map(product => (
+                {data.map(product => (
                     <ProductGridItem key={product.id} product={product} className="opacity-0" />
                 ))}
             </div>

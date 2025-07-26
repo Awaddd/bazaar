@@ -25,7 +25,7 @@ export default function () {
     return (
         <main ref={scope} className="grid grid-cols-3 gap-4 p-4 rounded-xl">
             {data?.map(product => (
-                <ProductGridItem key={product.id} product={product} className="opacity-0" />
+                <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200" />
             ))}
         </main>
     )

@@ -14,7 +14,7 @@ export default function ({ id = "product", product, className }: Props) {
         <Link href={`/products/${product.id}`}>
             <div
                 id={id}
-                className={cn("bg-gray-200 rounded-lg", className)}
+                className={cn("rounded-lg", className)}
             >
                 <MotionImage
                     src={product.imageUrl}

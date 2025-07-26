@@ -20,6 +20,7 @@ export default async function ({ params }: Props) {
 
     const queryClient = getQueryClient();
     await queryClient.prefetchQuery(products.get(id));
+    await queryClient.prefetchQuery(products.list({ limit: 2 }))
 
     // hard coded
     const moreProducts = await getProducts({
@@ -32,7 +33,7 @@ export default async function ({ params }: Props) {
             <main className="h-full relative flex flex-col space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-12">
                 <div className="grid gap-2 lg:flex lg:flex-col md:gap-4">
                     <ProductGallery productId={id} />
-                    <MoreProducts products={moreProducts} className="hidden mt-4 xl:mt-8 md:block" />
+                    <MoreProducts productId={id} className="hidden mt-4 xl:mt-8 md:block" />
                 </div>
 
                 <div className="flex flex-col space-y-3 lg:pt-2 xl:max-w-2/3">
@@ -69,7 +70,7 @@ export default async function ({ params }: Props) {
                             </p>
                         </div>
 
-                        <MoreProducts products={moreProducts} className="md:hidden" />
+                        <MoreProducts productId={id} className="md:hidden" />
                     </section>
                 </div>
 

@@ -8,6 +8,7 @@ import { parseApiResponse, processGalleryUrls, processImageUrl } from "./utils";
 type Params = {
   limit?: number;
   page?: number;
+  exclude?: number;
 };
 
 const base = ["products"];
@@ -32,6 +33,10 @@ async function fetchProducts(params: Params = {}) {
 
   if (params.page !== undefined) {
     url.searchParams.append("page", params.page.toString());
+  }
+
+  if (params.exclude !== undefined) {
+    url.searchParams.append("exclude", params.exclude.toString());
   }
 
   try {
