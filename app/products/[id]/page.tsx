@@ -20,7 +20,7 @@ export default async function ({ params }: Props) {
 
     const queryClient = getQueryClient();
     await queryClient.prefetchQuery(products.get(id));
-    await queryClient.prefetchQuery(products.list({ limit: 2 }))
+    await queryClient.prefetchQuery(products.list({ limit: 2, exclude: id }))
 
     // hard coded
     const moreProducts = await getProducts({

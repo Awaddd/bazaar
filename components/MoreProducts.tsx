@@ -13,7 +13,6 @@ type Props = {
 
 export default function ({ productId, className }: Props) {
     const { data } = useQuery(products.list({ limit: 2, exclude: productId }))
-    console.log("data", data)
 
     const [scope, animate] = useAnimate()
     const isInView = useInView(scope, { once: true })
