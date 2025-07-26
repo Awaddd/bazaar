@@ -1,4 +1,3 @@
-import getProducts from "@/app/actions/getProducts"
 import BackButton from "@/components/BackButton"
 import MoreProducts from "@/components/MoreProducts"
 import Detail from "@/components/product/detail"
@@ -10,6 +9,7 @@ import products from "@/features/products/products"
 import { getQueryClient } from "@/lib/get-query-client"
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import { PackageX } from "lucide-react"
+import { notFound } from "next/navigation"
 
 type Props = {
     params: Promise<{ id: string }>
@@ -18,15 +18,17 @@ type Props = {
 export default async function ({ params }: Props) {
     const id = parseInt((await params).id)
 
-    const queryClient = getQueryClient();
-    await queryClient.prefetchQuery(products.get(id));
-    await queryClient.prefetchQuery(products.list({ limit: 2, exclude: id }))
+    const product = await products.get(id).queryFn();
 
-    // hard coded
-    const moreProducts = await getProducts({
-        exclude: [id],
-        max: 2
-    })
+    if (!product) {
+        notFound();
+    }
+
+    const queryClient = getQueryClient();
+
+    queryClient.setQueryData(products.get(id).queryKey, product);
+
+    await queryClient.prefetchQuery(products.list({ limit: 2, exclude: id }))
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
