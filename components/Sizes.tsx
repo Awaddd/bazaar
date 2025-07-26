@@ -2,16 +2,17 @@
 
 import { cn } from "@/lib/utils";
 import { Label } from "./ui/label";
-import { Product } from "@/types/product";
 import { useState } from "react";
 import { AnimatePresence, motion, useAnimationControls } from "motion/react";
+import { useQuery } from "@tanstack/react-query";
+import products from "@/features/products/products";
 
 type Props = {
-    product: Product
+    productId: number
 }
-
-export default function ({ product }: Props) {
-    const [sizes, setSizes] = useState(product.sizes.map(size => ({ ...size, selected: size.default })))
+export default function ({ productId }: Props) {
+    const { data: product } = useQuery(products.get(productId))
+    const [sizes, setSizes] = useState(product?.sizes.map(size => ({ ...size, selected: size.default })) ?? [])
 
     function updateSize(size: number) {
         setSizes(sizes.map(item => item.size === size ? { ...item, selected: true } : { ...item, selected: false }))

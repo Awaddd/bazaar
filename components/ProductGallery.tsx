@@ -2,14 +2,18 @@
 
 import { useState } from "react"
 import MotionImage from "./MotionImage"
-import { Product } from "@/types/product"
+import products from "@/features/products/products"
+import { useQuery } from "@tanstack/react-query"
 
 type Props = {
-    product: Product
+    productId: number
 }
 
-export default function ({ product }: Props) {
+export default function ({ productId }: Props) {
+    const { data: product } = useQuery(products.get(productId))
     const [currentImage, setCurrentImage] = useState(0)
+
+    if (!product) return
 
     return (
         <>

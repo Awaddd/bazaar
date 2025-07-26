@@ -3,6 +3,7 @@ import {
   ProductApiResponse,
   ProductApiResponseSchema,
 } from "./schema";
+import { parseApiResponse, processGalleryUrls, processImageUrl } from "./utils";
 
 type Params = {
   exclude?: number[];
@@ -15,6 +16,10 @@ export default {
   list: (options: Params = {}) => ({
     queryKey: [...base, "list"] as const,
     queryFn: () => fetchProducts(options),
+  }),
+  get: (id: number) => ({
+    queryKey: [...base, "get"] as const,
+    queryFn: () => fetchProductById(id),
   }),
 };
 
@@ -37,28 +42,35 @@ async function fetchProducts(params: Params = {}) {
   }
 }
 
-function parseApiResponse(data: ProductApiResponse[]) {
-  const validItems: Product[] = [];
-  for (const item of data) {
-    const result = ProductApiResponseSchema.safeParse(item);
-    if (!result.success) {
-      console.warn("Failed to parse item", result.error.format());
-      continue;
+async function fetchProductById(id: number): Promise<Product | null> {
+  const url = new URL(
+    `/api/products/${id}`,
+    process.env.NEXT_PUBLIC_API_ENDPOINT
+  );
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`Failed to fetch data, response: ${err}`);
     }
 
-    validItems.push({
-      ...item,
-      gallery: processGalleryUrls(item.gallery),
-      imageUrl: processImageUrl(item.imageUrl),
-    });
+    const data = (await response.json()) as ProductApiResponse;
+    console.log("raw response", data);
+
+    const result = ProductApiResponseSchema.safeParse(data);
+
+    if (!result.success) {
+      throw new Error(`Failed to parse item ${result.error.format()}`);
+    }
+
+    return {
+      ...data,
+      imageUrl: processImageUrl(data.imageUrl),
+      gallery: processGalleryUrls(data.gallery),
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
   }
-  return validItems;
-}
-
-function processGalleryUrls(arr: string[]) {
-  return arr.map((item) => processImageUrl(item));
-}
-
-function processImageUrl(url: string) {
-  return `${process.env.NEXT_PUBLIC_API_ENDPOINT}${url}`;
 }
