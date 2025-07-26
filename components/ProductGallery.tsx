@@ -23,10 +23,11 @@ export default function ({ productId }: Props) {
                     src={product.gallery[currentImage] || product.imageUrl}
                     alt={`${product.name} ${product.category}`}
                     priority
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{
                         opacity: {
+                            delay: 0.2,
                             ease: "easeOut"
                         },
                     }}
