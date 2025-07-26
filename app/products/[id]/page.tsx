@@ -12,18 +12,18 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import { PackageX } from "lucide-react"
 
 type Props = {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 
 export default async function ({ params }: Props) {
-    const queryClient = getQueryClient();
+    const id = parseInt((await params).id)
 
-    const id = parseInt(params.id)
+    const queryClient = getQueryClient();
     await queryClient.prefetchQuery(products.get(id));
 
     // hard coded
     const moreProducts = await getProducts({
-        exclude: [parseInt(params.id)],
+        exclude: [id],
         max: 2
     })
 
