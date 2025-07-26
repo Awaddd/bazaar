@@ -26,7 +26,7 @@ export default async function Home() {
                     </Button>
                 </section>
                 {/* <Element name="section2"> */}
-                <section className={cn(height, "grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_3fr] gap-4")}>
+                <section className={cn(height, "grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_4fr] gap-4")}>
                     <aside className="flex flex-1 flex-grow bg-muted rounded-xl"></aside>
                     <HomeProductGrid />
                 </section>

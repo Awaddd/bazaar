@@ -7,10 +7,10 @@ import { Button } from './ui/button'
 export default function Header() {
     return (
         <header className="h-[80px] lg:h-[90px] flex justify-between items-center">
-            <div className="text-4xl font-black">
+            <a href="/" className="text-4xl font-black cursor-pointer">
                 <span className="text-primary">B</span>
                 <span className="text-primary/60">azar</span>
-            </div>
+            </a>
 
             <div className="xl:hidden">
                 <Button variant="ghost" size="icon">
