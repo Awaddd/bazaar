@@ -6,8 +6,8 @@ import {
 import { parseApiResponse, processGalleryUrls, processImageUrl } from "./utils";
 
 type Params = {
-  exclude?: number[];
-  max?: number;
+  limit?: number;
+  page?: number;
 };
 
 const base = ["products"];
@@ -25,6 +25,14 @@ export default {
 
 async function fetchProducts(params: Params = {}) {
   const url = new URL("/api/products", process.env.NEXT_PUBLIC_API_ENDPOINT);
+
+  if (params.limit !== undefined) {
+    url.searchParams.append("limit", params.limit.toString());
+  }
+
+  if (params.page !== undefined) {
+    url.searchParams.append("page", params.page.toString());
+  }
 
   try {
     const response = await fetch(url);

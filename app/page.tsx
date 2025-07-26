@@ -8,7 +8,7 @@ import products from "@/features/products/products";
 export default async function Home() {
     // const products = await getProducts({ max: 6 })
     const queryClient = getQueryClient()
-    await queryClient.prefetchQuery(products.list())
+    await queryClient.prefetchQuery(products.list({ limit: 6 }))
 
     const height = "h-[calc(100vh-110px)]"
 

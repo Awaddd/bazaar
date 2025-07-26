@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import products from "@/features/products/products"
 
 export default function () {
-    const { data } = useQuery(products.list())
+    const { data } = useQuery(products.list({ limit: 6 }))
 
     const [scope, animate] = useAnimate()
     const inView = useInView(scope, { once: true })
