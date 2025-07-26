@@ -22,6 +22,7 @@ export default function ({ productId }: Props) {
                     className="w-full h-64 sm:h-[65vh] max-h-128 object-cover bg-gray-200"
                     src={product.gallery[currentImage] || product.imageUrl}
                     alt={`${product.name} ${product.category}`}
+                    priority
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1 }}
                     transition={{

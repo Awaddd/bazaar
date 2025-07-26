@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Focus } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 
 type MotionImageProps = {
     src: string;
@@ -11,9 +12,10 @@ type MotionImageProps = {
     initial?: Record<string, any>
     animate?: Record<string, any>
     transition?: Record<string, any>
+    priority?: boolean
 };
 
-export default function MotionImage({ src, alt, className, active, onClick, initial = {}, animate = {}, transition = {} }: MotionImageProps) {
+export default function MotionImage({ src, alt, className, active, onClick, initial = {}, animate = {}, transition = {}, priority }: MotionImageProps) {
     return (
         <div className="relative">
             <motion.div
@@ -37,9 +39,7 @@ export default function MotionImage({ src, alt, className, active, onClick, init
                     </motion.div>
                 )}
             </motion.div>
-            <motion.img
-                src={src}
-                alt={alt}
+            <motion.div
                 whileHover={{ scale: 1.035 }}
                 initial={initial}
                 animate={{ opacity: [0, 1], ...animate }}
@@ -50,9 +50,17 @@ export default function MotionImage({ src, alt, className, active, onClick, init
                     },
                     ...transition
                 }}
+                onClick={onClick}
                 className={cn("rounded-lg cursor-pointer", className)}
-                onClick={() => onClick ? onClick() : undefined}
-            />
+            >
+                <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    priority={priority}
+                    className="rounded-lg object-cover"
+                />
+            </motion.div>
         </div>
     );
 }
