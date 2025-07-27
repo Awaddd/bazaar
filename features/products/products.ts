@@ -15,11 +15,11 @@ const base = ["products"];
 
 export default {
   list: (options: Params = {}) => ({
-    queryKey: [...base, "list"] as const,
+    queryKey: [...base, "list", options] as const,
     queryFn: () => fetchProducts(options),
   }),
   get: (id: number) => ({
-    queryKey: [...base, "get"] as const,
+    queryKey: [...base, "get", id] as const,
     queryFn: () => fetchProductById(id),
   }),
 };
