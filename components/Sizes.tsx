@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Label } from "./ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useAnimationControls } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import products from "@/features/products/products";
@@ -18,8 +18,10 @@ type ProductSize = Product["sizes"][number] & {
 
 export default function ({ productId }: Props) {
     const { data: product } = useQuery(products.get(productId))
-    const [sizes, setSizes] = useState(() => {
-        if (!product?.sizes) return []
+    const [sizes, setSizes] = useState<ProductSize[]>([])
+
+    useEffect(() => {
+        if (!product?.sizes) return
 
         const sizes: ProductSize[] = product.sizes.map(size => ({ ...size, selected: false }))
 
@@ -37,8 +39,8 @@ export default function ({ productId }: Props) {
             }
         }
 
-        return sizes
-    })
+        setSizes(sizes)
+    }, [product])
 
     function updateSize(size: number) {
         setSizes(sizes.map(item => item.size === size ? { ...item, selected: true } : { ...item, selected: false }))
