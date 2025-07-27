@@ -1,3 +1,4 @@
+import FilterSidebar from "@/components/FilterSidebar";
 import HomeProductGrid from "@/components/HomeProductGrid";
 import SortProducts from "@/components/SortProducts";
 import { Button } from "@/components/ui/button";
@@ -65,7 +66,6 @@ const HeroSection: React.FC = () => {
 
 
 export default async function Home() {
-    // const products = await getProducts({ max: 6 })
     const queryClient = getQueryClient()
     await queryClient.prefetchQuery(products.list({ limit: 6 }))
 
@@ -75,19 +75,11 @@ export default async function Home() {
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
             <main className="flex flex-col space-y-5">
-                {/* <section className={cn(height, "flex flex-grow flex-col space-y-8 justify-center items-center bg-muted rounded-xl")}>
-                    <h1 className="text-7xl font-black">
-                        <span className="text-muted-foreground">B</span>
-                        <span className="text-muted-foreground/60">azar</span>
-                    </h1>
-                    <Button asChild size="lg" className="!px-24">
-                        Shop
-                    </Button>
-                </section> */}
                 <HeroSection />
                 {/* <Element name="section2"> */}
                 <section className={cn(height, "grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_4fr] gap-4")}>
-                    <aside className="flex flex-1 flex-grow bg-muted rounded-xl"></aside>
+                    <FilterSidebar />
+
                     <div className="p-4">
                         <div className="flex justify-between align-bottom mb-8">
                             <div>
