@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import HeroCTA from "./HeroCTA";
 
 export default function () {
     return (
@@ -34,9 +35,7 @@ export default function () {
                             Discover authentic sneakers from the world's most coveted brands.
                         </p>
 
-                        <Button size="lg" className="!px-10 bg-primary/90 hover:bg-primary">
-                            Browse Collection
-                        </Button>
+                        <HeroCTA />
                     </div>
 
                     {/* Right Visual - Replace this with your custom art or 3D render */}
