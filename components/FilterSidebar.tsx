@@ -1,5 +1,6 @@
 "use client"
 
+import PriceRange from "./PriceRange";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 
@@ -29,32 +30,34 @@ export default function () {
                         </div>
                     ))}
                 </div>
-
-                <div className="space-y-3">
-                    <h3 className="font-medium text-foreground">Price Range</h3>
-                </div>
-
-                <div className="space-y-3">
-                    <h3 className="font-medium text-foreground">Sizes</h3>
-                    <div className="grid grid-cols-4 gap-2">
-                        {availableSizes.map((size) => (
-                            <button
-                                key={size}
-                                className="w-12 h-12 rounded-lg border text-sm font-medium transition-all bg-background text-foreground border-border hover:border-gray-400"
-                            >
-                                {size}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <Button
-                    variant="outline"
-                    className="w-full"
-                >
-                    Clear All Filters
-                </Button>
             </div>
+
+
+            <div className="space-y-3">
+                <h3 className="font-medium text-foreground">Price Range</h3>
+                <PriceRange />
+            </div>
+
+            <div className="space-y-3">
+                <h3 className="font-medium text-foreground">Sizes</h3>
+                <div className="grid grid-cols-4 gap-2">
+                    {availableSizes.map((size) => (
+                        <button
+                            key={size}
+                            className="w-12 h-12 rounded-lg border text-sm font-medium transition-all bg-background text-foreground border-border hover:border-gray-400"
+                        >
+                            {size}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <Button
+                variant="outline"
+                className="w-full"
+            >
+                Clear All Filters
+            </Button>
         </div>
     )
 }
