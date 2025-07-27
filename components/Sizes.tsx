@@ -21,23 +21,23 @@ export default function ({ productId }: Props) {
     const [sizes, setSizes] = useState(() => {
         if (!product?.sizes) return []
 
-        const arr: ProductSize[] = product.sizes.slice(0)
+        const sizes: ProductSize[] = product.sizes.map(size => ({ ...size, selected: false }))
 
-        const len = arr.length
+        const len = sizes.length
         const start = Math.floor(len / 2)
-        let selectedOne = false
+        let hasDefaultedSize = false
 
         for (let i = 0; i < len; i++) {
             const index = (start + i) % len
-            const size = arr[index]
+            const size = sizes[index]
 
-            if (!selectedOne && size.available) {
+            if (!hasDefaultedSize && size.available) {
                 size.selected = true
-                selectedOne = true
+                hasDefaultedSize = true
             }
         }
 
-        return arr
+        return sizes
     })
 
     function updateSize(size: number) {
