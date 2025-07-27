@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     domains: [process.env.NEXT_PUBLIC_IMAGE_DOMAIN || "localhost"],
     remotePatterns: [
       {
-        protocol: "https",
+        protocol: "http",
         hostname: process.env.NEXT_PUBLIC_IMAGE_DOMAIN || "localhost",
         pathname: "/assets/products/**",
       },
