@@ -6,13 +6,39 @@ import { useState } from "react";
 import { AnimatePresence, motion, useAnimationControls } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import products from "@/features/products/products";
+import { Product } from "@/features/products/schema";
 
 type Props = {
     productId: number
 }
+
+type ProductSize = Product["sizes"][number] & {
+    selected?: boolean
+}
+
 export default function ({ productId }: Props) {
     const { data: product } = useQuery(products.get(productId))
-    const [sizes, setSizes] = useState(product?.sizes.map(size => ({ ...size, selected: size.default })) ?? [])
+    const [sizes, setSizes] = useState(() => {
+        if (!product?.sizes) return []
+
+        const arr: ProductSize[] = product.sizes.slice(0)
+
+        const len = arr.length
+        const start = Math.floor(len / 2)
+        let selectedOne = false
+
+        for (let i = 0; i < len; i++) {
+            const index = (start + i) % len
+            const size = arr[index]
+
+            if (!selectedOne && size.available) {
+                size.selected = true
+                selectedOne = true
+            }
+        }
+
+        return arr
+    })
 
     function updateSize(size: number) {
         setSizes(sizes.map(item => item.size === size ? { ...item, selected: true } : { ...item, selected: false }))
@@ -25,7 +51,7 @@ export default function ({ productId }: Props) {
                 {sizes.map((size, index) => (
                     <Size
                         key={index}
-                        selected={size.selected ?? size.default}
+                        selected={size.selected}
                         disabled={!size.available}
                         onClick={() => updateSize(size.size)}
                         size={size.size}

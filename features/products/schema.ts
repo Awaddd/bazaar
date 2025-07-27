@@ -34,7 +34,6 @@ export type ProductApiResponse = {
   sizes: {
     size: number;
     available?: boolean;
-    default?: boolean;
   }[];
 };
 
