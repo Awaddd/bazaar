@@ -19,6 +19,9 @@ export default function RootLayout({
 
     return (
         <html lang="en">
+            <head>
+                <link rel="icon" href="/favicon.png" type="image/png" />
+            </head>
             <body className={`antialiased`}>
                 <div className={cn("min-h-screen max-w-[100rem] mx-auto space-y-2 flex flex-col pb-10 xl:pb-4 px-4 lg:px-8 xl:px-12 bg-background text-foreground", theme)}>
                     <Providers>
