@@ -1,16 +1,18 @@
 import HomeProductGrid from "@/components/HomeProductGrid";
+import SortProducts from "@/components/SortProducts";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import products from "@/features/products/products";
 import { getQueryClient } from "@/lib/get-query-client";
 import { cn } from "@/lib/utils";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Star } from "lucide-react";
+import { Search, Star } from "lucide-react";
 import Image from "next/image";
 const HeroSection: React.FC = () => {
     return (
         <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-600 to-blue-900 py-16 rounded-xl">
             {/* Background Effects */}
-            <div className="absolute inset-0">
+            <div className="inset-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-700/10 via-transparent to-rose-700/10" />
                 <div className="absolute top-1/4 left-1/6 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl" />
                 <div className="absolute bottom-1/4 right-1/6 w-64 h-64 bg-rose-600/20 rounded-full blur-3xl" />
@@ -86,7 +88,29 @@ export default async function Home() {
                 {/* <Element name="section2"> */}
                 <section className={cn(height, "grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_4fr] gap-4")}>
                     <aside className="flex flex-1 flex-grow bg-muted rounded-xl"></aside>
-                    <HomeProductGrid />
+                    <div className="p-4">
+                        <div className="flex justify-between align-bottom mb-8">
+                            <div>
+                                <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Drops</h2>
+                                <p className="text-gray-600">Discover the newest additions to our collection</p>
+                            </div>
+                            <div className="flex items-end gap-2">
+                                <SortProducts />
+                                <div>
+                                    <div className="relative">
+                                        <div className="absolute inset-0 flex items-center ">
+                                            <Search className="w-3 h-3 ml-2.5 text-muted-foreground" />
+                                        </div>
+                                        <Input
+                                            placeholder="Search sneakers..."
+                                            className="pl-8 bg-gray-50"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <HomeProductGrid />
+                    </div>
                 </section>
                 {/* </Element> */}
             </main>
