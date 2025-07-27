@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function () {
     return (
-        <section className="relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-600 to-blue-900 py-16 rounded-xl">
+        <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-600 to-blue-900 py-16 rounded-xl">
             {/* Background Effects */}
             <div className="inset-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-700/10 via-transparent to-rose-700/10" />
@@ -12,7 +12,7 @@ export default function () {
                 <div className="absolute bottom-1/4 right-1/6 w-64 h-64 bg-rose-600/20 rounded-full blur-3xl" />
             </div>
 
-            <div className="relative z-10 max-w-[100rem] mx-auto px-6 lg:px-8">
+            <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-0">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div className="text-center lg:text-left">
