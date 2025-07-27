@@ -32,13 +32,13 @@ export default async function ({ params }: Props) {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <main className="h-full relative flex flex-col space-y-4 lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-12">
+            <main className="h-full relative flex flex-col space-y-4 lg:grid lg:grid-cols-[4fr_3fr] lg:gap-6 xl:gap-12">
                 <div className="grid gap-2 lg:flex lg:flex-col md:gap-4">
                     <ProductGallery productId={id} />
                     <MoreProducts productId={id} className="hidden mt-4 xl:mt-8 md:block" />
                 </div>
 
-                <div className="flex flex-col space-y-3 lg:pt-2 xl:max-w-2/3">
+                <div className="flex flex-col space-y-3 lg:pt-2 ">
                     <Header productId={id} />
                     <Sizes productId={id} />
 

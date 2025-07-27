@@ -6,7 +6,7 @@ import { Button } from './ui/button'
 
 export default function Header() {
     return (
-        <header className="h-[80px] lg:h-[90px] flex justify-between items-center">
+        <header className="h-[80px] lg:h-[100px] flex justify-between items-center">
             <a href="/" className="text-4xl font-black cursor-pointer">
                 <span className="text-primary">B</span>
                 <span className="text-primary/60">azar</span>

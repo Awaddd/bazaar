@@ -12,7 +12,7 @@ export default function () {
                 <div className="absolute bottom-1/4 right-1/6 w-64 h-64 bg-rose-600/20 rounded-full blur-3xl" />
             </div>
 
-            <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-0">
+            <div className="relative z-10 px-6 lg:px-20">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div className="text-center lg:text-left">

@@ -21,7 +21,7 @@ export default async function Home() {
             <main className="flex flex-col space-y-5">
                 <Hero />
                 {/* <Element name="section2"> */}
-                <section className={cn(height, "max-w-[100rem] mx-auto grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_4fr] gap-4")}>
+                <section className={cn(height, "grid grid-rows-[1fr_3fr] lg:grid-rows-1 lg:grid-cols-[1fr_4fr] gap-4")}>
                     <FilterSidebar />
 
                     <div className="p-4">
