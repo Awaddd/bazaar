@@ -13,7 +13,7 @@ import {
 export default function () {
     return (
         <Select>
-            <SelectTrigger className="w-[180px] bg-gray-50">
+            <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by: Featured" />
             </SelectTrigger>
             <SelectContent>

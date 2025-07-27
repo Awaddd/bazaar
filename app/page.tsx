@@ -39,7 +39,7 @@ export default async function Home() {
                                         </div>
                                         <Input
                                             placeholder="Search sneakers..."
-                                            className="pl-8 bg-gray-50"
+                                            className="pl-8"
                                         />
                                     </div>
                                 </div>
