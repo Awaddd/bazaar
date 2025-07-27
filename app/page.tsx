@@ -26,8 +26,11 @@ const HeroSection: React.FC = () => {
                         </div>
 
                         <h1 className="text-5xl lg:text-7xl font-bold mb-4 leading-tight">
-                            <span className="bg-gradient-to-r from-yellow-500 to-yellow-400 bg-clip-text text-transparent">
-                                Sneakers.
+                            <span
+                                className="bg-gradient-to-r from-orange-300 to-pink-300 bg-clip-text text-transparent"
+                                style={{ textShadow: '0 0 8px rgba(255, 255, 255, 0.15)' }}
+                            >
+                                Sneakers
                             </span>
                         </h1>
 
