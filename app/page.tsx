@@ -25,7 +25,7 @@ export default async function Home() {
                     <FilterSidebar />
 
                     <div className="p-4">
-                        <div className="flex justify-between align-bottom mb-8">
+                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 justify-between align-bottom mb-8">
                             <div>
                                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Drops</h2>
                                 <p className="text-gray-600">Discover the newest additions to our collection</p>

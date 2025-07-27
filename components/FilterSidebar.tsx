@@ -40,11 +40,11 @@ export default function () {
 
             <div className="space-y-3">
                 <h3 className="font-medium text-foreground">Sizes</h3>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                     {availableSizes.map((size) => (
                         <button
                             key={size}
-                            className="w-12 h-12 rounded-lg border text-sm font-medium transition-all bg-background text-foreground border-border hover:border-gray-400"
+                            className="min-w-12 min-h-12 rounded-lg border text-sm font-medium transition-all bg-background text-foreground border-border hover:border-gray-400"
                         >
                             {size}
                         </button>

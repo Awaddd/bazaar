@@ -13,7 +13,7 @@ export default function () {
             </div>
 
             <div className="relative z-10 px-6 lg:px-20">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                     {/* Left Content */}
                     <div className="text-center lg:text-left">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 mb-6">
@@ -30,7 +30,7 @@ export default function () {
                             </span>
                         </h1>
 
-                        <p className="text-lg lg:text-xl text-white/70 mb-8 max-w-md">
+                        <p className="text-lg lg:text-xl text-white/70 mb-8 lg:max-w-md">
                             Discover authentic sneakers from the world's most coveted brands.
                         </p>
 
@@ -40,8 +40,8 @@ export default function () {
                     </div>
 
                     {/* Right Visual - Replace this with your custom art or 3D render */}
-                    <div className="flex justify-center p-10">
-                        <div className="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden">
+                    <div className="flex justify-center lg:p-10">
+                        <div className="relative w-full max-w-[10rem] lg:max-w-md aspect-square rounded-2xl overflow-hidden">
                             <Image
                                 src="/assets/hero-sneaker-5.png"
                                 alt="Hero Sneaker Visual"
