@@ -24,7 +24,7 @@ export default function ({ productId }: Props) {
         const sizes: ProductSize[] = product.sizes.map(size => ({ ...size, selected: false }))
 
         const len = sizes.length
-        const start = Math.floor(len / 2)
+        const start = Math.max(Math.floor(len / 2) - 1, 0)
         let hasDefaultedSize = false
 
         for (let i = 0; i < len; i++) {
