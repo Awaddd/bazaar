@@ -209,7 +209,7 @@ export default function () {
                                     priceStep,
                                     sliderValue
                                 )}
-                                className="bg-primary/20 size-full"
+                                className="bg-gray-300 size-full"
                             ></span>
                         </div>
                     ))}

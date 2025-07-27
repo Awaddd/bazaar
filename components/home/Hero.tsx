@@ -5,7 +5,7 @@ import HeroCTA from "./HeroCTA";
 
 export default function () {
     return (
-        <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-600 to-blue-900 py-16 rounded-xl">
+        <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-600 to-blue-900 py-16 rounded-xl select-none">
             {/* Background Effects */}
             <div className="inset-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-700/10 via-transparent to-rose-700/10" />
