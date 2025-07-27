@@ -2,12 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["localhost"], // Allow localhost
+    domains: [process.env.NEXT_PUBLIC_IMAGE_DOMAIN || "localhost"],
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-        port: "5176",
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_IMAGE_DOMAIN || "localhost",
         pathname: "/assets/products/**",
       },
     ],
