@@ -25,6 +25,7 @@ export default {
 };
 
 async function fetchProducts(params: Params = {}) {
+  const start = performance.now();
   const url = new URL("/api/products", process.env.NEXT_PUBLIC_SITE_URL);
 
   if (params.limit !== undefined) {
@@ -45,6 +46,9 @@ async function fetchProducts(params: Params = {}) {
       const err = await response.text();
       throw new Error(`Failed to fetch data, response: ${err}`);
     }
+
+    const duration = performance.now() - start;
+    console.log(`Frontend fetch took ${duration}ms`);
 
     const data = (await response.json()) as ProductApiResponse[];
     return parseApiResponse(data);
