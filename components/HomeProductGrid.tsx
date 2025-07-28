@@ -13,8 +13,6 @@ export default function () {
     const inView = useInView(scope, { once: true })
 
     useEffect(() => {
-        if (!data || data.length === 0) return
-
         if (inView) {
             animate("#product", { opacity: 1 }, {
                 ease: "easeInOut",
@@ -22,7 +20,7 @@ export default function () {
                 delay: stagger(0.1)
             })
         }
-    }, [inView, animate, data])
+    }, [inView, animate])
 
     return (
         <main ref={scope} className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
