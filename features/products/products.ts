@@ -25,7 +25,7 @@ export default {
 };
 
 async function fetchProducts(params: Params = {}) {
-  const url = new URL("/api/products", process.env.NEXT_PUBLIC_API_ENDPOINT);
+  const url = new URL("/api/products", process.env.NEXT_PUBLIC_SITE_URL);
 
   if (params.limit !== undefined) {
     url.searchParams.append("limit", params.limit.toString());
@@ -55,10 +55,7 @@ async function fetchProducts(params: Params = {}) {
 }
 
 async function fetchProductById(id: number): Promise<Product | null> {
-  const url = new URL(
-    `/api/products/${id}`,
-    process.env.NEXT_PUBLIC_API_ENDPOINT
-  );
+  const url = new URL(`/api/products/${id}`, process.env.NEXT_PUBLIC_SITE_URL);
 
   try {
     const response = await fetch(url);
