@@ -3,32 +3,53 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import { ShieldCheck, Truck, CreditCard } from "lucide-react";
-
-const cartItems = [
-    {
-        id: 1,
-        name: "Nike Air Max 90",
-        size: 9,
-        price: 129,
-        quantity: 1,
-        image: "/assets/products/nike-air-max-90-orange.png",
-        addons: "Premium Laces + Extra Insoles"
-    },
-    {
-        id: 2,
-        name: "Jordan 1 Green",
-        size: 10,
-        price: 189,
-        quantity: 1,
-        image: "/assets/products/jordan-1-green.png"
-    },
-];
+import { useQuery } from "@tanstack/react-query";
+import cart from "@/features/cart/cart";
+import Link from "next/link";
 
 export default function OrderSummary() {
+    const { data: cartItems = [], isLoading } = useQuery(cart.list());
+
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = 0;
     const vat = Math.round(subtotal * 0.20);
     const total = subtotal + shipping + vat;
+
+    if (isLoading) {
+        return (
+            <div className="flex flex-col space-y-6">
+                <div className="h-10 w-48 bg-muted rounded animate-pulse" />
+                <div className="space-y-3">
+                    {Array.from({ length: 2 }).map((_, i) => (
+                        <div key={i} className="h-32 bg-muted rounded-lg animate-pulse" />
+                    ))}
+                </div>
+                <div className="h-40 bg-muted rounded animate-pulse" />
+            </div>
+        );
+    }
+
+    if (cartItems.length === 0) {
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ opacity: { delay: 0.2, duration: 0.4, ease: "easeOut" } }}
+                className="flex flex-col items-center justify-center space-y-6 p-8 border border-border rounded-lg"
+            >
+                <h2 className="text-2xl font-semibold">Your cart is empty</h2>
+                <p className="text-muted-foreground text-center">
+                    Add some items to your cart to continue with checkout
+                </p>
+                <Link
+                    href="/products"
+                    className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                    Browse Products
+                </Link>
+            </motion.div>
+        );
+    }
 
     return (
         <motion.div
@@ -50,15 +71,15 @@ export default function OrderSummary() {
                     >
                         <div className="relative w-24 h-24 bg-background rounded-lg overflow-hidden flex-shrink-0">
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}${item.image}`}
-                                alt={item.name}
+                                src={item.imageUrl}
+                                alt={item.productName}
                                 fill
                                 className="object-contain p-3"
                             />
                         </div>
                         <div className="flex-1 min-w-0 flex flex-col justify-between">
                             <div>
-                                <h3 className="font-semibold text-base">{item.name}</h3>
+                                <h3 className="font-semibold text-base">{item.productName}</h3>
                                 {item.addons && (
                                     <p className="text-xs text-muted-foreground mt-1">{item.addons}</p>
                                 )}

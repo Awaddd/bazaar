@@ -5,36 +5,38 @@ import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-
-type CartItem = {
-    id: number;
-    name: string;
-    size: number;
-    price: number;
-    quantity: number;
-    image: string;
-};
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import cart from "@/features/cart/cart";
+import { CartItem } from "@/features/cart/schema";
 
 type Props = {
     items: CartItem[];
 };
 
 export default function CartItems({ items }: Props) {
-    const [cartItems, setCartItems] = useState(items);
+    const queryClient = useQueryClient();
 
-    const updateQuantity = (id: number, delta: number) => {
-        setCartItems(prev => prev.map(item => {
-            if (item.id === id) {
-                const newQuantity = Math.max(1, item.quantity + delta);
-                return { ...item, quantity: newQuantity };
-            }
-            return item;
-        }));
+    const updateMutation = useMutation({
+        ...cart.update(),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["cart"] });
+        },
+    });
+
+    const removeMutation = useMutation({
+        ...cart.remove(),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["cart"] });
+        },
+    });
+
+    const updateQuantity = (id: number, currentQuantity: number, delta: number) => {
+        const newQuantity = Math.max(1, currentQuantity + delta);
+        updateMutation.mutate({ id, quantity: newQuantity });
     };
 
     const removeItem = (id: number) => {
-        setCartItems(prev => prev.filter(item => item.id !== id));
+        removeMutation.mutate(id);
     };
 
     return (
@@ -47,7 +49,7 @@ export default function CartItems({ items }: Props) {
             <h1 className="text-3xl lg:text-4xl font-semibold">Shopping Cart</h1>
 
             <div className="flex flex-col space-y-3">
-                {cartItems.map((item, index) => (
+                {items.map((item, index) => (
                     <motion.div
                         key={item.id}
                         initial={{ y: 20, opacity: 0 }}
@@ -57,8 +59,8 @@ export default function CartItems({ items }: Props) {
                     >
                         <div className="relative w-24 h-24 lg:w-32 lg:h-32 bg-background rounded-lg overflow-hidden flex-shrink-0">
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}${item.image}`}
-                                alt={item.name}
+                                src={item.imageUrl}
+                                alt={item.productName}
                                 fill
                                 className="object-contain p-3"
                             />
@@ -66,7 +68,7 @@ export default function CartItems({ items }: Props) {
 
                         <div className="flex-1 min-w-0 flex flex-col justify-between">
                             <div>
-                                <h3 className="font-semibold text-base lg:text-lg">{item.name}</h3>
+                                <h3 className="font-semibold text-base lg:text-lg">{item.productName}</h3>
                                 <div className="flex items-center gap-3 mt-2">
                                     <span className="text-sm text-muted-foreground">Size {item.size}</span>
                                 </div>
@@ -81,8 +83,8 @@ export default function CartItems({ items }: Props) {
                                     <Button
                                         variant="outline"
                                         size="icon"
-                                        onClick={() => updateQuantity(item.id, -1)}
-                                        disabled={item.quantity <= 1}
+                                        onClick={() => updateQuantity(item.id, item.quantity, -1)}
+                                        disabled={item.quantity <= 1 || updateMutation.isPending}
                                         className="h-8 w-8"
                                     >
                                         <Minus size={14} />
@@ -96,7 +98,8 @@ export default function CartItems({ items }: Props) {
                                     <Button
                                         variant="outline"
                                         size="icon"
-                                        onClick={() => updateQuantity(item.id, 1)}
+                                        onClick={() => updateQuantity(item.id, item.quantity, 1)}
+                                        disabled={updateMutation.isPending}
                                         className="h-8 w-8"
                                     >
                                         <Plus size={14} />
@@ -107,6 +110,7 @@ export default function CartItems({ items }: Props) {
                                     variant="ghost"
                                     size="sm"
                                     onClick={() => removeItem(item.id)}
+                                    disabled={removeMutation.isPending}
                                     className="text-destructive hover:text-destructive hover:bg-destructive/10"
                                 >
                                     <Trash2 size={16} />
@@ -118,16 +122,13 @@ export default function CartItems({ items }: Props) {
                 ))}
             </div>
 
-            {cartItems.length === 0 && (
+            {items.length === 0 && (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="flex flex-col items-center justify-center h-64 space-y-4"
+                    className="flex flex-col items-center justify-center h-64"
                 >
                     <p className="text-muted-foreground text-lg">Your cart is empty</p>
-                    <Button asChild size="lg">
-                        <a href="/products">Browse Products</a>
-                    </Button>
                 </motion.div>
             )}
         </motion.div>

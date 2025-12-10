@@ -2,9 +2,8 @@ import BackButton from "@/components/BackButton"
 import MoreProducts from "@/components/MoreProducts"
 import Detail from "@/components/product/detail"
 import Header from "@/components/product/header"
+import ProductActions from "@/components/product/actions"
 import ProductGallery from "@/components/ProductGallery"
-import Sizes from "@/components/Sizes"
-import { Button } from "@/components/ui/button"
 import products from "@/features/products/products"
 import { getQueryClient } from "@/lib/get-query-client"
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
@@ -40,15 +39,7 @@ export default async function ({ params }: Props) {
 
                 <div className="flex flex-col space-y-3 lg:pt-2 ">
                     <Header productId={id} />
-                    <Sizes productId={id} />
-
-                    <div className="grid grid-cols-2 gap-2 mt-7">
-                        <Button variant="secondary" size="lg">Add to cart</Button>
-                        <Button size="lg" className="flex space-x-2">
-                            <span>💳</span>
-                            Buy now
-                        </Button>
-                    </div>
+                    <ProductActions productId={id} />
 
                     <div className="text-sm text-muted-foreground mt-0.5 flex items-center space-x-1.5">
                         <PackageX size={16} />

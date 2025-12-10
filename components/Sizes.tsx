@@ -9,14 +9,15 @@ import products from "@/features/products/products";
 import { Product } from "@/features/products/schema";
 
 type Props = {
-    productId: number
+    productId: number;
+    onSizeChange?: (size: number | null) => void;
 }
 
 type ProductSize = Product["sizes"][number] & {
     selected?: boolean
 }
 
-export default function ({ productId }: Props) {
+export default function ({ productId, onSizeChange }: Props) {
     const { data: product } = useQuery(products.get(productId))
     const [sizes, setSizes] = useState<ProductSize[]>([])
 
@@ -36,14 +37,20 @@ export default function ({ productId }: Props) {
             if (!hasDefaultedSize && size.available) {
                 size.selected = true
                 hasDefaultedSize = true
+                if (onSizeChange) {
+                    onSizeChange(size.size)
+                }
             }
         }
 
         setSizes(sizes)
-    }, [product])
+    }, [product, onSizeChange])
 
     function updateSize(size: number) {
         setSizes(sizes.map(item => item.size === size ? { ...item, selected: true } : { ...item, selected: false }))
+        if (onSizeChange) {
+            onSizeChange(size)
+        }
     }
 
     return (
