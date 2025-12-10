@@ -11,7 +11,7 @@ const cartItems = [
         size: 9,
         price: 129,
         quantity: 1,
-        image: "/assets/products/air-max-90-orange.png",
+        image: "/assets/products/nike-air-max-90-orange.png",
         addons: "Premium Laces + Extra Insoles"
     },
     {
