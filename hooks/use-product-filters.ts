@@ -3,13 +3,13 @@
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { useCallback, useMemo, useTransition } from "react"
 
-export type SortOption = "price_asc" | "price_desc" | "name_asc" | "featured"
+export type SortOption = "default" | "price_asc" | "price_desc" | "name_asc" | "featured"
 
 export type ProductFilters = {
   brands: string[]
   minPrice: number | null
   maxPrice: number | null
-  size: number | null
+  sizes: number[]
   search: string
   sort: SortOption
 }
@@ -18,7 +18,7 @@ export type ProductFilterParams = {
   brands?: string
   minPrice?: string
   maxPrice?: string
-  size?: string
+  sizes?: string
   search?: string
   sort?: string
 }
@@ -27,9 +27,9 @@ const DEFAULT_FILTERS: ProductFilters = {
   brands: [],
   minPrice: null,
   maxPrice: null,
-  size: null,
+  sizes: [],
   search: "",
-  sort: "featured",
+  sort: "default",
 }
 
 export function useProductFilters() {
@@ -43,7 +43,7 @@ export function useProductFilters() {
     const brandsParam = searchParams.get("brands")
     const minPriceParam = searchParams.get("minPrice")
     const maxPriceParam = searchParams.get("maxPrice")
-    const sizeParam = searchParams.get("size")
+    const sizesParam = searchParams.get("sizes")
     const searchParam = searchParams.get("search")
     const sortParam = searchParams.get("sort")
 
@@ -51,9 +51,9 @@ export function useProductFilters() {
       brands: brandsParam ? brandsParam.split(",").filter(Boolean) : [],
       minPrice: minPriceParam ? Number(minPriceParam) : null,
       maxPrice: maxPriceParam ? Number(maxPriceParam) : null,
-      size: sizeParam ? Number(sizeParam) : null,
+      sizes: sizesParam ? sizesParam.split(",").map(Number).filter(Boolean) : [],
       search: searchParam ?? "",
-      sort: isValidSortOption(sortParam) ? sortParam : "featured",
+      sort: isValidSortOption(sortParam) ? sortParam : "default",
     }
   }, [searchParams])
 
@@ -90,12 +90,12 @@ export function useProductFilters() {
           }
         }
 
-        // Handle size
-        if (updates.size !== undefined) {
-          if (updates.size !== null) {
-            params.set("size", updates.size.toString())
+        // Handle sizes
+        if (updates.sizes !== undefined) {
+          if (updates.sizes.length > 0) {
+            params.set("sizes", updates.sizes.join(","))
           } else {
-            params.delete("size")
+            params.delete("sizes")
           }
         }
 
@@ -110,7 +110,7 @@ export function useProductFilters() {
 
         // Handle sort
         if (updates.sort !== undefined) {
-          if (updates.sort !== "featured") {
+          if (updates.sort !== "default") {
             params.set("sort", updates.sort)
           } else {
             params.delete("sort")
@@ -145,12 +145,16 @@ export function useProductFilters() {
     [updateFilters]
   )
 
-  // Set size
-  const setSize = useCallback(
-    (size: number | null) => {
-      updateFilters({ size })
+  // Toggle size selection (multi-select)
+  const toggleSize = useCallback(
+    (size: number) => {
+      const currentSizes = filters.sizes
+      const newSizes = currentSizes.includes(size)
+        ? currentSizes.filter((s) => s !== size)
+        : [...currentSizes, size].sort((a, b) => a - b)
+      updateFilters({ sizes: newSizes })
     },
-    [updateFilters]
+    [filters.sizes, updateFilters]
   )
 
   // Set search
@@ -182,9 +186,9 @@ export function useProductFilters() {
       filters.brands.length > 0 ||
       filters.minPrice !== null ||
       filters.maxPrice !== null ||
-      filters.size !== null ||
+      filters.sizes.length > 0 ||
       filters.search !== "" ||
-      filters.sort !== "featured"
+      filters.sort !== "default"
     )
   }, [filters])
 
@@ -201,13 +205,13 @@ export function useProductFilters() {
     if (filters.maxPrice !== null) {
       params.maxPrice = filters.maxPrice.toString()
     }
-    if (filters.size !== null) {
-      params.size = filters.size.toString()
+    if (filters.sizes.length > 0) {
+      params.sizes = filters.sizes.join(",")
     }
     if (filters.search) {
       params.search = filters.search
     }
-    if (filters.sort !== "featured") {
+    if (filters.sort !== "default") {
       params.sort = filters.sort
     }
 
@@ -219,7 +223,7 @@ export function useProductFilters() {
     isPending,
     toggleBrand,
     setPriceRange,
-    setSize,
+    toggleSize,
     setSearch,
     setSort,
     clearFilters,
@@ -231,6 +235,7 @@ export function useProductFilters() {
 
 function isValidSortOption(value: string | null): value is SortOption {
   return (
+    value === "default" ||
     value === "price_asc" ||
     value === "price_desc" ||
     value === "name_asc" ||

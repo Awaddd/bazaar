@@ -12,6 +12,7 @@ import {
 import { useProductFilters, SortOption } from "@/hooks/use-product-filters"
 
 const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "default", label: "Default" },
     { value: "featured", label: "Featured" },
     { value: "price_asc", label: "Price: Low to High" },
     { value: "price_desc", label: "Price: High to Low" },
@@ -24,7 +25,7 @@ export default function SortProducts() {
     return (
         <Select value={filters.sort} onValueChange={(value) => setSort(value as SortOption)}>
             <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by: Featured" />
+                <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>

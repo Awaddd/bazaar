@@ -13,7 +13,7 @@ type Params = {
   brands?: string;
   minPrice?: string;
   maxPrice?: string;
-  size?: string;
+  sizes?: string;
   search?: string;
   sort?: string;
 };
@@ -60,8 +60,8 @@ async function fetchProducts(params: Params = {}) {
     url.searchParams.append("maxPrice", params.maxPrice);
   }
 
-  if (params.size) {
-    url.searchParams.append("size", params.size);
+  if (params.sizes) {
+    url.searchParams.append("sizes", params.sizes);
   }
 
   if (params.search) {

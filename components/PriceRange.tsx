@@ -157,6 +157,29 @@ export default function PriceRange({ minPrice, maxPrice, onPriceChange }: PriceR
         handleSliderChange,
     } = useSliderWithInput({ minValue, maxValue, initialValue: [initialMin, initialMax] })
 
+    // Sync local state when external props change (e.g., when filters are cleared)
+    const prevMinPriceRef = useRef(minPrice)
+    const prevMaxPriceRef = useRef(maxPrice)
+
+    useEffect(() => {
+        const prevMin = prevMinPriceRef.current
+        const prevMax = prevMaxPriceRef.current
+
+        // Check if props changed from outside (not from our own updates)
+        if (prevMin !== minPrice || prevMax !== maxPrice) {
+            const newMin = minPrice ?? minValue
+            const newMax = maxPrice ?? maxValue
+
+            // Only update if the slider values don't match the new prop values
+            if (sliderValue[0] !== newMin || sliderValue[1] !== newMax) {
+                handleSliderChange([newMin, newMax])
+            }
+
+            prevMinPriceRef.current = minPrice
+            prevMaxPriceRef.current = maxPrice
+        }
+    }, [minPrice, maxPrice, minValue, maxValue, sliderValue, handleSliderChange])
+
     // Debounce timer ref
     const debounceRef = useRef<NodeJS.Timeout | null>(null)
 

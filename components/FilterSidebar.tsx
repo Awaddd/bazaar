@@ -6,7 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { useProductFilters } from "@/hooks/use-product-filters";
 import { cn } from "@/lib/utils";
 
-const brands = ["Nike", "Adidas", "Jordan", "Converse", "Vans", "ASICS"];
+const brands = ["Nike", "Adidas", "Jordan", "Converse", "Vans", "Asics"];
 const availableSizes = [6, 7, 8, 9, 10, 11, 12];
 
 export default function FilterSidebar() {
@@ -14,7 +14,7 @@ export default function FilterSidebar() {
         filters,
         toggleBrand,
         setPriceRange,
-        setSize,
+        toggleSize,
         clearFilters,
         hasActiveFilters,
     } = useProductFilters();
@@ -54,17 +54,17 @@ export default function FilterSidebar() {
                 />
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
                 <h3 className="font-medium text-foreground">Sizes</h3>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-5 gap-1">
                     {availableSizes.map((size) => {
-                        const isSelected = filters.size === size;
+                        const isSelected = filters.sizes.includes(size);
                         return (
                             <button
                                 key={size}
-                                onClick={() => setSize(isSelected ? null : size)}
+                                onClick={() => toggleSize(size)}
                                 className={cn(
-                                    "min-w-12 min-h-12 rounded-lg border text-sm font-medium transition-all",
+                                    "h-8 rounded border text-xs font-medium transition-all",
                                     isSelected
                                         ? "bg-foreground text-background border-foreground"
                                         : "bg-background text-foreground border-border hover:border-gray-400"
