@@ -20,7 +20,11 @@ export async function GET(req: NextRequest) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'private, no-cache, must-revalidate'
+      }
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -58,7 +62,11 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: {
+        'Cache-Control': 'private, no-cache, must-revalidate'
+      }
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

@@ -48,7 +48,7 @@ export default function ({ productId, className }: Props) {
             </motion.h4>
             <div ref={scope} className="grid grid-cols-2 gap-2 md:gap-4 mt-4">
                 {data.map(product => (
-                    <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200" />
+                    <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200 dark:bg-white/10" />
                 ))}
             </div>
         </div>

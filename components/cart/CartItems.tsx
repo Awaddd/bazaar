@@ -57,7 +57,7 @@ export default function CartItems({ items }: Props) {
                         transition={{ delay: 0.3 + index * 0.1 }}
                         className="flex space-x-4 p-4 bg-muted rounded-lg"
                     >
-                        <div className="relative w-24 h-24 lg:w-32 lg:h-32 bg-background rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="relative w-24 h-24 lg:w-32 lg:h-32 bg-white dark:bg-white/10 rounded-lg overflow-hidden flex-shrink-0">
                             <Image
                                 src={item.imageUrl}
                                 alt={item.productName}

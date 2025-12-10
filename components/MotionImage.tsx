@@ -13,9 +13,10 @@ type MotionImageProps = {
     animate?: Record<string, any>
     transition?: Record<string, any>
     priority?: boolean
+    loading?: "lazy" | "eager"
 };
 
-export default function MotionImage({ src, alt, className, active, onClick, initial = {}, animate = {}, transition = {}, priority }: MotionImageProps) {
+export default function MotionImage({ src, alt, className, active, onClick, initial = {}, animate = {}, transition = {}, priority, loading }: MotionImageProps) {
     return (
         <div className="relative">
             <motion.div
@@ -58,6 +59,7 @@ export default function MotionImage({ src, alt, className, active, onClick, init
                     alt={alt}
                     fill
                     priority={priority}
+                    loading={loading || (!priority ? "lazy" : undefined)}
                     className="rounded-lg object-cover"
                 />
             </motion.div>

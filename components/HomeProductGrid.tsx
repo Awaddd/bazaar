@@ -36,7 +36,7 @@ export default function HomeProductGrid({ limit }: Props) {
                 {Array.from({ length: 6 }).map((_, i) => (
                     <div
                         key={i}
-                        className="h-80 rounded-lg bg-gray-200 animate-pulse"
+                        className="h-80 rounded-lg bg-gray-200 dark:bg-white/10 animate-pulse"
                     />
                 ))}
             </main>
@@ -54,7 +54,7 @@ export default function HomeProductGrid({ limit }: Props) {
     return (
         <main ref={scope} className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {data.map(product => (
-                <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200" />
+                <ProductGridItem key={product.id} product={product} className="opacity-0 bg-gray-200 dark:bg-white/10" />
             ))}
         </main>
     )

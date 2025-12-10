@@ -19,7 +19,7 @@ export default function ({ productId }: Props) {
         <>
             <div className="overflow-hidden">
                 <MotionImage
-                    className="w-full h-64 sm:h-[65vh] max-h-128 object-cover bg-gray-200"
+                    className="w-full h-64 sm:h-[65vh] max-h-128 object-cover bg-gray-200 dark:bg-white/10"
                     src={product.gallery[currentImage] || product.imageUrl}
                     alt={`${product.name} ${product.category}`}
                     priority
@@ -37,7 +37,7 @@ export default function ({ productId }: Props) {
                 {product.gallery.map((image, index) => (
                     <MotionImage
                         key={index}
-                        className="w-full h-18 lg:h-24 sm:h-30 xl:h-36 object-cover bg-gray-200"
+                        className="w-full h-18 lg:h-24 sm:h-30 xl:h-36 object-cover bg-gray-200 dark:bg-white/10"
                         src={image}
                         alt={`${product.name} gallery image ${index + 1}`}
                         active={index === currentImage}

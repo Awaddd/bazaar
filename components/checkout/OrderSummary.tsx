@@ -6,16 +6,22 @@ import { ShieldCheck, Truck, CreditCard } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import cart from "@/features/cart/cart";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function OrderSummary() {
     const { data: cartItems = [], isLoading } = useQuery(cart.list());
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = 0;
     const vat = Math.round(subtotal * 0.20);
     const total = subtotal + shipping + vat;
 
-    if (isLoading) {
+    if (!mounted || isLoading) {
         return (
             <div className="flex flex-col space-y-6">
                 <div className="h-10 w-48 bg-muted rounded animate-pulse" />
@@ -69,7 +75,7 @@ export default function OrderSummary() {
                         transition={{ delay: 0.3 + index * 0.1 }}
                         className="flex space-x-4 p-4 bg-muted rounded-lg"
                     >
-                        <div className="relative w-24 h-24 bg-background rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="relative w-24 h-24 bg-white dark:bg-white/10 rounded-lg overflow-hidden flex-shrink-0">
                             <Image
                                 src={item.imageUrl}
                                 alt={item.productName}

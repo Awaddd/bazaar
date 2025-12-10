@@ -18,9 +18,24 @@ export default function RootLayout({
     const theme: Theme = "light"
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <link rel="icon" href="/favicon.png" type="image/png" />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            (function() {
+                                try {
+                                    const stored = localStorage.getItem('theme');
+                                    const theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                                    if (theme === 'dark') {
+                                        document.documentElement.classList.add('dark');
+                                    }
+                                } catch (e) {}
+                            })();
+                        `,
+                    }}
+                />
             </head>
             <body className={`antialiased`}>
                 <div className={cn("min-h-screen max-w-[100rem] mx-auto flex flex-col pb-10 xl:pb-4 px-4 lg:px-8 xl:px-12 bg-background text-foreground", theme)}>
