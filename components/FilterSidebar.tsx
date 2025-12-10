@@ -20,7 +20,7 @@ export default function FilterSidebar() {
     } = useProductFilters();
 
     return (
-        <div className="p-6 space-y-6 border-r border-border">
+        <div className="py-6 pr-6 pl-2 lg:pl-0 space-y-6 border-r border-border">
             <h2 className="text-lg font-semibold text-foreground">Filters</h2>
 
             <div className="space-y-3">

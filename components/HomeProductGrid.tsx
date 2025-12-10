@@ -7,11 +7,15 @@ import { useQuery } from "@tanstack/react-query"
 import products from "@/features/products/products"
 import { useProductFilters } from "@/hooks/use-product-filters"
 
-export default function HomeProductGrid() {
+type Props = {
+    limit?: number
+}
+
+export default function HomeProductGrid({ limit }: Props) {
     const { getApiParams } = useProductFilters()
     const filterParams = getApiParams()
 
-    const { data, isLoading } = useQuery(products.list({ limit: 6, ...filterParams }))
+    const { data, isLoading } = useQuery(products.list({ ...(limit && { limit }), ...filterParams }))
 
     const [scope, animate] = useAnimate()
     const inView = useInView(scope, { once: true })

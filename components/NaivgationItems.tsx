@@ -1,29 +1,40 @@
 "use client"
 
-export default function () {
-    const [active, setActive] = useState("home")
+import { motion } from "motion/react";
+import { Button } from "./ui/button";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+const routes = [
+    { href: "/", label: "Home" },
+    { href: "/products", label: "Products" },
+    { href: "/checkout", label: "Checkout" },
+]
+
+export default function NavigationItems() {
+    const pathname = usePathname()
 
     return (
         <>
-            <NavigationItem route="home" label="Home" active={active === "home"} setActive={setActive} />
-            <NavigationItem route="products" label="Products" active={active === "products"} setActive={setActive} />
-            <NavigationItem route="checkout" label="Checkout" active={active === "checkout"} setActive={setActive} />
+            {routes.map((route) => (
+                <NavigationItem
+                    key={route.href}
+                    href={route.href}
+                    label={route.label}
+                    active={pathname === route.href}
+                />
+            ))}
         </>
     )
 }
 
-import { motion } from "motion/react";
-import { Button } from "./ui/button";
-import { useState } from "react";
-
 type Props = {
-    route: string
+    href: string
     label: string
     active?: boolean
-    setActive: (route: string) => void
 }
 
-function NavigationItem({ route, label, active, setActive }: Props) {
+function NavigationItem({ href, label, active }: Props) {
     return (
         <div className="relative">
             {active && (
@@ -37,12 +48,8 @@ function NavigationItem({ route, label, active, setActive }: Props) {
                 variant="invisible"
                 asChild
                 className="text-lg font-medium"
-                onClick={(e) => {
-                    e.preventDefault();
-                    setActive(route);
-                }}
             >
-                <a href="#">{label}</a>
+                <Link href={href}>{label}</Link>
             </Button>
         </div>
     )

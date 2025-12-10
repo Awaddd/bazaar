@@ -6,7 +6,17 @@ import SortProducts from "@/components/SortProducts";
 import SearchInput from "@/components/SearchInput";
 import { cn } from "@/lib/utils";
 
-export default function ProductsList() {
+type Props = {
+    title?: string
+    description?: string
+    limit?: number
+}
+
+export default function ProductsList({
+    title = "Latest Drops",
+    description = "Discover the newest additions to our collection",
+    limit
+}: Props) {
     const height = "h-[calc(100vh-110px)]"
 
     return (
@@ -16,15 +26,15 @@ export default function ProductsList() {
             <div className="p-4">
                 <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 justify-between align-bottom mb-8">
                     <div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Drops</h2>
-                        <p className="text-gray-600">Discover the newest additions to our collection</p>
+                        <h2 className="text-3xl font-bold text-foreground mb-2">{title}</h2>
+                        <p className="text-muted-foreground">{description}</p>
                     </div>
                     <div className="flex items-end gap-2">
                         <SortProducts />
                         <SearchInput />
                     </div>
                 </div>
-                <HomeProductGrid />
+                <HomeProductGrid limit={limit} />
             </div>
         </section>
     )
