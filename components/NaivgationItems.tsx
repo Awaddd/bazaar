@@ -8,6 +8,7 @@ import Link from "next/link";
 const routes = [
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
+    { href: "/cart", label: "Cart" },
     { href: "/checkout", label: "Checkout" },
 ]
 
