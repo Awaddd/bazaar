@@ -1,4 +1,4 @@
-import * as React from "react"
+"use client"
 
 import {
     Select,
@@ -9,20 +9,31 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useProductFilters, SortOption } from "@/hooks/use-product-filters"
 
-export default function () {
+const sortOptions: { value: SortOption; label: string }[] = [
+    { value: "featured", label: "Featured" },
+    { value: "price_asc", label: "Price: Low to High" },
+    { value: "price_desc", label: "Price: High to Low" },
+    { value: "name_asc", label: "Name: A to Z" },
+]
+
+export default function SortProducts() {
+    const { filters, setSort } = useProductFilters()
+
     return (
-        <Select>
+        <Select value={filters.sort} onValueChange={(value) => setSort(value as SortOption)}>
             <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Sort by: Featured" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    <SelectLabel>Options</SelectLabel>
-                    <SelectItem value="low">Price: Low to High</SelectItem>
-                    <SelectItem value="high">Price: High to Low</SelectItem>
-                    <SelectItem value="new">Newest</SelectItem>
-                    <SelectItem value="rating">Best Rating</SelectItem>
+                    <SelectLabel>Sort by</SelectLabel>
+                    {sortOptions.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                        </SelectItem>
+                    ))}
                 </SelectGroup>
             </SelectContent>
         </Select>

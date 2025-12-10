@@ -1,11 +1,12 @@
+"use client"
+
 import FilterSidebar from "@/components/FilterSidebar";
 import HomeProductGrid from "@/components/HomeProductGrid";
 import SortProducts from "@/components/SortProducts";
-import { Input } from "@/components/ui/input";
+import SearchInput from "@/components/SearchInput";
 import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
 
-export default function () {
+export default function ProductsList() {
     const height = "h-[calc(100vh-110px)]"
 
     return (
@@ -20,17 +21,7 @@ export default function () {
                     </div>
                     <div className="flex items-end gap-2">
                         <SortProducts />
-                        <div>
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center ">
-                                    <Search className="w-3 h-3 ml-2.5 text-muted-foreground" />
-                                </div>
-                                <Input
-                                    placeholder="Search sneakers..."
-                                    className="pl-8"
-                                />
-                            </div>
-                        </div>
+                        <SearchInput />
                     </div>
                 </div>
                 <HomeProductGrid />

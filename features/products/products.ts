@@ -9,6 +9,13 @@ type Params = {
   limit?: number;
   page?: number;
   exclude?: number;
+  // Filter params
+  brands?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  size?: string;
+  search?: string;
+  sort?: string;
 };
 
 const base = ["products"];
@@ -38,6 +45,31 @@ async function fetchProducts(params: Params = {}) {
 
   if (params.exclude !== undefined) {
     url.searchParams.append("exclude", params.exclude.toString());
+  }
+
+  // Filter params
+  if (params.brands) {
+    url.searchParams.append("brands", params.brands);
+  }
+
+  if (params.minPrice) {
+    url.searchParams.append("minPrice", params.minPrice);
+  }
+
+  if (params.maxPrice) {
+    url.searchParams.append("maxPrice", params.maxPrice);
+  }
+
+  if (params.size) {
+    url.searchParams.append("size", params.size);
+  }
+
+  if (params.search) {
+    url.searchParams.append("search", params.search);
+  }
+
+  if (params.sort) {
+    url.searchParams.append("sort", params.sort);
   }
 
   try {

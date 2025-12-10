@@ -1,9 +1,8 @@
 "use client"
 
-import { useId } from "react"
+import { useId, useEffect, useRef } from "react"
 
 import { useSliderWithInput } from "@/hooks/use-slider-with-input"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
@@ -131,7 +130,13 @@ const items = [
     { id: 120, price: 900 },
 ]
 
-export default function () {
+type PriceRangeProps = {
+    minPrice: number | null
+    maxPrice: number | null
+    onPriceChange: (minPrice: number | null, maxPrice: number | null) => void
+}
+
+export default function PriceRange({ minPrice, maxPrice, onPriceChange }: PriceRangeProps) {
     const id = useId()
 
     // Define the number of ticks
@@ -140,13 +145,43 @@ export default function () {
     const minValue = Math.min(...items.map((item) => item.price))
     const maxValue = Math.max(...items.map((item) => item.price))
 
+    // Determine initial values from props or use defaults
+    const initialMin = minPrice ?? minValue
+    const initialMax = maxPrice ?? maxValue
+
     const {
         sliderValue,
         inputValues,
         validateAndUpdateValue,
         handleInputChange,
         handleSliderChange,
-    } = useSliderWithInput({ minValue, maxValue, initialValue: [200, 780] }) // set initialValue: [minValue, maxValue] to show all items by default
+    } = useSliderWithInput({ minValue, maxValue, initialValue: [initialMin, initialMax] })
+
+    // Debounce timer ref
+    const debounceRef = useRef<NodeJS.Timeout | null>(null)
+
+    // Notify parent of price changes with debouncing
+    useEffect(() => {
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current)
+        }
+
+        debounceRef.current = setTimeout(() => {
+            const newMin = sliderValue[0] === minValue ? null : sliderValue[0]
+            const newMax = sliderValue[1] === maxValue ? null : sliderValue[1]
+
+            // Only update if values have actually changed from URL state
+            if (newMin !== minPrice || newMax !== maxPrice) {
+                onPriceChange(newMin, newMax)
+            }
+        }, 300)
+
+        return () => {
+            if (debounceRef.current) {
+                clearTimeout(debounceRef.current)
+            }
+        }
+    }, [sliderValue, minValue, maxValue, onPriceChange, minPrice, maxPrice])
 
     // Calculate the price step based on the min and max prices
     const priceStep = (maxValue - minValue) / tick_count
