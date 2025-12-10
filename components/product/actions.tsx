@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Sizes from "@/components/Sizes";
-import { Button } from "@/components/ui/button";
 import AddToCartButton from "./add-to-cart-button";
+import BuyNowButton from "./buy-now-button";
 
 type Props = {
   productId: number;
@@ -18,10 +18,7 @@ export default function ProductActions({ productId }: Props) {
 
       <div className="grid grid-cols-2 gap-2 mt-7">
         <AddToCartButton productId={productId} selectedSize={selectedSize} />
-        <Button size="lg" className="flex space-x-2">
-          <span>💳</span>
-          Buy now
-        </Button>
+        <BuyNowButton productId={productId} selectedSize={selectedSize} />
       </div>
     </>
   );

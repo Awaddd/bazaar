@@ -1,14 +1,24 @@
 "use client"
 
-import { Theme } from "@/types/types"
+import { useTheme } from "@/hooks/use-theme"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "./ui/button"
 
-export default function () {
-    const theme = "light" as Theme // temp add state management
+export default function ThemeToggle() {
+    const { theme, toggleTheme, mounted } = useTheme()
 
-    function updateTheme(theme: Theme) {
-
+    if (!mounted) {
+        return (
+            <Button
+                variant="ghost"
+                size="icon"
+                className="text-lg font-medium ml-2"
+                disabled
+                aria-label="Loading theme"
+            >
+                <Moon />
+            </Button>
+        )
     }
 
     if (theme === "dark") {
@@ -17,7 +27,8 @@ export default function () {
                 variant="ghost"
                 size="icon"
                 className="text-lg font-medium ml-2"
-                onClick={() => updateTheme("light")}
+                onClick={toggleTheme}
+                aria-label="Switch to light mode"
             >
                 <Sun />
             </Button>
@@ -29,7 +40,8 @@ export default function () {
             variant="ghost"
             size="icon"
             className="text-lg font-medium ml-2"
-            onClick={() => updateTheme("dark")}
+            onClick={toggleTheme}
+            aria-label="Switch to dark mode"
         >
             <Moon />
         </Button>

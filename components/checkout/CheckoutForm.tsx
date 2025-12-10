@@ -16,6 +16,16 @@ interface StepConfig {
     title: string;
 }
 
+type ShippingMethod = "standard" | "express" | "nextday";
+
+interface ShippingOption {
+    id: ShippingMethod;
+    name: string;
+    description: string;
+    price: number;
+    priceLabel: string;
+}
+
 const steps: StepConfig[] = [
     { id: "contact", number: 1, title: "Contact Information" },
     { id: "shipping", number: 2, title: "Shipping Information" },
@@ -23,9 +33,34 @@ const steps: StepConfig[] = [
     { id: "payment", number: 4, title: "Payment" },
 ];
 
+const shippingOptions: ShippingOption[] = [
+    {
+        id: "standard",
+        name: "Standard Shipping",
+        description: "5-7 business days",
+        price: 0,
+        priceLabel: "Free"
+    },
+    {
+        id: "express",
+        name: "Express Shipping",
+        description: "2-3 business days",
+        price: 12,
+        priceLabel: "£12"
+    },
+    {
+        id: "nextday",
+        name: "Next Day Delivery",
+        description: "1 business day",
+        price: 20,
+        priceLabel: "£20"
+    }
+];
+
 export default function CheckoutForm() {
     const [currentStep, setCurrentStep] = useState<Step>("contact");
     const [completedSteps, setCompletedSteps] = useState<Set<Step>>(new Set());
+    const [selectedShipping, setSelectedShipping] = useState<ShippingMethod>("standard");
 
     const isStepCompleted = (stepId: Step) => completedSteps.has(stepId);
     const isStepCurrent = (stepId: Step) => currentStep === stepId;
@@ -139,33 +174,49 @@ export default function CheckoutForm() {
             >
                 <div className="space-y-3">
                     <div className="space-y-2">
-                        <button className="w-full p-4 border-2 border-primary rounded-lg text-left bg-primary/5">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <div className="font-medium">Standard Shipping</div>
-                                    <div className="text-sm text-muted-foreground">5-7 business days</div>
-                                </div>
-                                <div className="font-semibold text-green-600">Free</div>
-                            </div>
-                        </button>
-                        <button className="w-full p-4 border border-border rounded-lg text-left hover:border-foreground/50">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <div className="font-medium">Express Shipping</div>
-                                    <div className="text-sm text-muted-foreground">2-3 business days</div>
-                                </div>
-                                <div className="font-semibold">£12</div>
-                            </div>
-                        </button>
-                        <button className="w-full p-4 border border-border rounded-lg text-left hover:border-foreground/50">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <div className="font-medium">Next Day Delivery</div>
-                                    <div className="text-sm text-muted-foreground">1 business day</div>
-                                </div>
-                                <div className="font-semibold">£20</div>
-                            </div>
-                        </button>
+                        {shippingOptions.map((option) => {
+                            const isSelected = selectedShipping === option.id;
+                            return (
+                                <button
+                                    key={option.id}
+                                    type="button"
+                                    onClick={() => setSelectedShipping(option.id)}
+                                    className={cn(
+                                        "w-full p-4 rounded-lg text-left transition-all",
+                                        isSelected
+                                            ? "border-2 border-primary bg-primary/5"
+                                            : "border border-border hover:border-foreground/50"
+                                    )}
+                                    aria-pressed={isSelected}
+                                    aria-label={`Select ${option.name} for ${option.priceLabel}`}
+                                >
+                                    <div className="flex justify-between items-start">
+                                        <div className="flex items-start gap-3">
+                                            <div className={cn(
+                                                "w-5 h-5 rounded-full border-2 flex items-center justify-center mt-0.5 flex-shrink-0",
+                                                isSelected
+                                                    ? "border-primary bg-primary"
+                                                    : "border-muted-foreground/50"
+                                            )}>
+                                                {isSelected && (
+                                                    <Check size={12} className="text-primary-foreground" />
+                                                )}
+                                            </div>
+                                            <div>
+                                                <div className="font-medium">{option.name}</div>
+                                                <div className="text-sm text-muted-foreground">{option.description}</div>
+                                            </div>
+                                        </div>
+                                        <div className={cn(
+                                            "font-semibold",
+                                            option.price === 0 && "text-green-600"
+                                        )}>
+                                            {option.priceLabel}
+                                        </div>
+                                    </div>
+                                </button>
+                            );
+                        })}
                     </div>
                     <Button
                         className="w-full mt-4"

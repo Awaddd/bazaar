@@ -1,5 +1,4 @@
-import { LucideMenu, ShoppingCart } from 'lucide-react'
-import Cart from './Cart'
+import { LucideMenu } from 'lucide-react'
 import NaivgationItems from './NaivgationItems'
 import ThemeToggle from './ThemeToggle'
 import { Button } from './ui/button'
@@ -20,12 +19,6 @@ export default function Header() {
 
             <nav className="hidden relative xl:flex xl:h-9">
                 <NaivgationItems />
-
-                <Cart>
-                    <Button variant="ghost" size="icon" className="text-lg font-medium ml-2">
-                        <ShoppingCart />
-                    </Button>
-                </Cart>
                 <ThemeToggle />
             </nav>
         </header>

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import cart from "@/features/cart/cart";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
@@ -10,25 +11,26 @@ type Props = {
   selectedSize: number | null;
 };
 
-export default function AddToCartButton({ productId, selectedSize }: Props) {
+export default function BuyNowButton({ productId, selectedSize }: Props) {
+  const router = useRouter();
   const queryClient = useQueryClient();
-  const [isAdding, setIsAdding] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const addMutation = useMutation({
     ...cart.add(),
     onMutate: () => {
-      setIsAdding(true);
+      setIsProcessing(true);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart", "list"] });
-      setTimeout(() => setIsAdding(false), 1500);
+      router.push("/checkout");
     },
     onError: () => {
-      setIsAdding(false);
+      setIsProcessing(false);
     },
   });
 
-  function handleAddToCart() {
+  function handleBuyNow() {
     if (!selectedSize) return;
 
     addMutation.mutate({
@@ -40,13 +42,13 @@ export default function AddToCartButton({ productId, selectedSize }: Props) {
 
   return (
     <Button
-      variant="secondary"
       size="lg"
-      onClick={handleAddToCart}
-      disabled={!selectedSize || isAdding || addMutation.isPending}
-      className="transition-all"
+      onClick={handleBuyNow}
+      disabled={!selectedSize || isProcessing || addMutation.isPending}
+      className="flex space-x-2"
     >
-      {isAdding ? "Added to cart" : "Add to cart"}
+      <span>💳</span>
+      <span>{isProcessing || addMutation.isPending ? "Processing..." : "Buy now"}</span>
     </Button>
   );
 }
