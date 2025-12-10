@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "motion/react";
-import MotionImage from "@/components/MotionImage";
+import Image from "next/image";
 import { ShieldCheck, Truck, CreditCard } from "lucide-react";
 
 const cartItems = [
@@ -27,8 +27,8 @@ const cartItems = [
 export default function OrderSummary() {
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = 0;
-    const tax = Math.round(subtotal * 0.08);
-    const total = subtotal + shipping + tax;
+    const vat = Math.round(subtotal * 0.20);
+    const total = subtotal + shipping + vat;
 
     return (
         <motion.div
@@ -49,9 +49,10 @@ export default function OrderSummary() {
                         className="flex space-x-4 p-4 bg-muted rounded-lg"
                     >
                         <div className="relative w-24 h-24 bg-background rounded-lg overflow-hidden flex-shrink-0">
-                            <MotionImage
+                            <Image
                                 src={`${process.env.NEXT_PUBLIC_API_ENDPOINT}${item.image}`}
                                 alt={item.name}
+                                fill
                                 className="object-contain p-3"
                             />
                         </div>
@@ -67,7 +68,7 @@ export default function OrderSummary() {
                                 </div>
                             </div>
                             <div className="text-right">
-                                <span className="font-bold text-lg">${item.price}</span>
+                                <span className="font-bold text-lg">£{item.price}</span>
                             </div>
                         </div>
                     </motion.div>
@@ -77,22 +78,22 @@ export default function OrderSummary() {
             <div className="border-t border-border pt-6 space-y-3">
                 <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-medium">${subtotal}</span>
+                    <span className="font-medium">£{subtotal}</span>
                 </div>
                 <div className="flex justify-between">
                     <span className="text-muted-foreground">Shipping</span>
                     <span className="font-semibold text-green-600">Free</span>
                 </div>
                 <div className="flex justify-between">
-                    <span className="text-muted-foreground">Tax (8%)</span>
-                    <span className="font-medium">${tax}</span>
+                    <span className="text-muted-foreground">VAT (20%)</span>
+                    <span className="font-medium">£{vat}</span>
                 </div>
             </div>
 
             <div className="border-t-2 border-border pt-6">
                 <div className="flex items-baseline justify-between">
                     <span className="text-xl font-semibold">Total</span>
-                    <span className="text-5xl xl:text-6xl font-black">${total}</span>
+                    <span className="text-5xl xl:text-6xl font-black">£{total}</span>
                 </div>
             </div>
 
@@ -118,7 +119,7 @@ export default function OrderSummary() {
                     </div>
                     <div>
                         <div className="font-medium">Fast & Reliable Shipping</div>
-                        <div className="text-xs text-muted-foreground">Free on orders over $100</div>
+                        <div className="text-xs text-muted-foreground">Free on orders over £75</div>
                     </div>
                 </div>
                 <div className="flex items-center space-x-3 text-sm">

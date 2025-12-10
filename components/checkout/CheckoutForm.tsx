@@ -74,8 +74,8 @@ export default function CheckoutForm() {
                     <div>
                         <Label htmlFor="phone" className="font-medium">Phone</Label>
                         <div className="flex gap-2 mt-2">
-                            <Input className="w-24" placeholder="+1" />
-                            <Input className="flex-1" placeholder="(555) 123-4567" />
+                            <Input className="w-24" placeholder="+44" />
+                            <Input className="flex-1" placeholder="07123 456789" />
                         </div>
                     </div>
                     <Button
@@ -98,26 +98,26 @@ export default function CheckoutForm() {
                 <div className="space-y-3">
                     <div>
                         <Label htmlFor="address" className="font-medium">Address</Label>
-                        <Input id="address" className="mt-2" placeholder="123 Main Street" />
+                        <Input id="address" className="mt-2" placeholder="10 High Street" />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <Label htmlFor="city" className="font-medium">City</Label>
-                            <Input id="city" className="mt-2" placeholder="New York" />
+                            <Input id="city" className="mt-2" placeholder="London" />
                         </div>
                         <div>
-                            <Label htmlFor="zip" className="font-medium">Zip Code</Label>
-                            <Input id="zip" className="mt-2" placeholder="10001" />
+                            <Label htmlFor="zip" className="font-medium">Postcode</Label>
+                            <Input id="zip" className="mt-2" placeholder="SW1A 1AA" />
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         <div>
                             <Label htmlFor="country" className="font-medium">Country</Label>
-                            <Input id="country" className="mt-2" placeholder="United States" />
+                            <Input id="country" className="mt-2" placeholder="United Kingdom" />
                         </div>
                         <div>
-                            <Label htmlFor="state" className="font-medium">State</Label>
-                            <Input id="state" className="mt-2" placeholder="NY" />
+                            <Label htmlFor="state" className="font-medium">County</Label>
+                            <Input id="state" className="mt-2" placeholder="Greater London" />
                         </div>
                     </div>
                     <Button
@@ -154,7 +154,7 @@ export default function CheckoutForm() {
                                     <div className="font-medium">Express Shipping</div>
                                     <div className="text-sm text-muted-foreground">2-3 business days</div>
                                 </div>
-                                <div className="font-semibold">$15</div>
+                                <div className="font-semibold">£12</div>
                             </div>
                         </button>
                         <button className="w-full p-4 border border-border rounded-lg text-left hover:border-foreground/50">
@@ -163,7 +163,7 @@ export default function CheckoutForm() {
                                     <div className="font-medium">Next Day Delivery</div>
                                     <div className="text-sm text-muted-foreground">1 business day</div>
                                 </div>
-                                <div className="font-semibold">$25</div>
+                                <div className="font-semibold">£20</div>
                             </div>
                         </button>
                     </div>
@@ -228,7 +228,7 @@ interface StepSectionProps {
 }
 
 function StepSection({ step, isCompleted, isCurrent, onEdit, children }: StepSectionProps) {
-    const isOpen = isCurrent || !isCompleted;
+    const isOpen = isCurrent;
 
     return (
         <div className="border border-border rounded-lg overflow-hidden">
