@@ -183,20 +183,3 @@ Use this guide when building pages that should match the product detail page aes
 | Base | Single column, smaller text/spacing |
 | `lg:` (1024px) | Two-column grid, increased gaps |
 | `xl:` (1280px) | Larger text, more spacing |
-
----
-
-## Checkout Page Sections (Recommended)
-
-1. **Order Summary** (left column on desktop)
-   - Product image thumbnail
-   - Product name, size, quantity
-   - Price breakdown
-
-2. **Checkout Form** (right column on desktop)
-   - Shipping information
-   - Payment method
-   - Order total
-   - Place order button
-
-Use same `lg:grid lg:grid-cols-[4fr_3fr]` layout as product detail.
