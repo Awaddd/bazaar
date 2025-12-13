@@ -11,9 +11,14 @@ export async function GET(req: NextRequest) {
   }
 
   const url = new URL("/api/cart", base);
+  const sessionId = req.headers.get("X-Session-Id") || "";
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "X-Session-Id": sessionId,
+      },
+    });
     if (!response.ok) {
       const err = await response.text();
       throw new Error(`Failed to fetch data, response: ${err}`);
@@ -45,6 +50,7 @@ export async function POST(req: NextRequest) {
   }
 
   const url = new URL("/api/cart", base);
+  const sessionId = req.headers.get("X-Session-Id") || "";
 
   try {
     const body = await req.json();
@@ -52,6 +58,7 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Session-Id": sessionId,
       },
       body: JSON.stringify(body),
     });

@@ -4,6 +4,7 @@ import {
   CartItemApiResponseSchema,
 } from "./schema";
 import { parseCartResponse, processImageUrl } from "./utils";
+import { getSessionId } from "@/lib/session";
 
 const base = ["cart"];
 
@@ -27,9 +28,14 @@ export default {
 
 async function fetchCartItems() {
   const url = new URL("/api/cart", process.env.NEXT_PUBLIC_SITE_URL);
+  const sessionId = getSessionId();
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "X-Session-Id": sessionId,
+      },
+    });
     if (!response.ok) {
       const err = await response.text();
       throw new Error(`Failed to fetch data, response: ${err}`);
@@ -45,12 +51,14 @@ async function fetchCartItems() {
 
 async function addCartItem(productId: number, size: number, quantity: number): Promise<CartItem | null> {
   const url = new URL("/api/cart", process.env.NEXT_PUBLIC_SITE_URL);
+  const sessionId = getSessionId();
 
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Session-Id": sessionId,
       },
       body: JSON.stringify({ productId, size, quantity }),
     });
@@ -79,12 +87,14 @@ async function addCartItem(productId: number, size: number, quantity: number): P
 
 async function updateCartItem(id: number, quantity: number): Promise<CartItem | null> {
   const url = new URL(`/api/cart/${id}`, process.env.NEXT_PUBLIC_SITE_URL);
+  const sessionId = getSessionId();
 
   try {
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "X-Session-Id": sessionId,
       },
       body: JSON.stringify({ quantity }),
     });
@@ -113,10 +123,14 @@ async function updateCartItem(id: number, quantity: number): Promise<CartItem | 
 
 async function removeCartItem(id: number): Promise<boolean> {
   const url = new URL(`/api/cart/${id}`, process.env.NEXT_PUBLIC_SITE_URL);
+  const sessionId = getSessionId();
 
   try {
     const response = await fetch(url, {
       method: "DELETE",
+      headers: {
+        "X-Session-Id": sessionId,
+      },
     });
 
     if (!response.ok) {

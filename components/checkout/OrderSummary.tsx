@@ -86,9 +86,6 @@ export default function OrderSummary() {
                         <div className="flex-1 min-w-0 flex flex-col justify-between">
                             <div>
                                 <h3 className="font-semibold text-base">{item.productName}</h3>
-                                {item.addons && (
-                                    <p className="text-xs text-muted-foreground mt-1">{item.addons}</p>
-                                )}
                                 <div className="flex items-center gap-3 mt-2">
                                     <span className="text-sm text-muted-foreground">Size {item.size}</span>
                                     <span className="text-sm text-muted-foreground">Qty {item.quantity}</span>

@@ -15,6 +15,7 @@ export async function PUT(
 
   const { id } = await params;
   const url = new URL(`/api/cart/${id}`, base);
+  const sessionId = req.headers.get("X-Session-Id") || "";
 
   try {
     const body = await req.json();
@@ -22,6 +23,7 @@ export async function PUT(
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "X-Session-Id": sessionId,
       },
       body: JSON.stringify(body),
     });
@@ -57,10 +59,14 @@ export async function DELETE(
 
   const { id } = await params;
   const url = new URL(`/api/cart/${id}`, base);
+  const sessionId = req.headers.get("X-Session-Id") || "";
 
   try {
     const response = await fetch(url, {
       method: "DELETE",
+      headers: {
+        "X-Session-Id": sessionId,
+      },
     });
 
     if (!response.ok) {
